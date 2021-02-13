@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My book shelf</title>
+    <style>
+        *{
+            font-family: cursive;
+        }
+        #login_form{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .login_item{
+            margin-bottom:10px;
+        }
+        .logo{
+            height: 125px;
+        }
+        a{
+            text-decoration: none;
+        }
+
+        button{
+            margin-left: 92px;
+        }
+    </style>
+</head>
+<body>
+    <div id="login_form">
+        <form method="post" th:action="@{/login/auth}" th:object="${loginForm}">
+            <img class="login_item logo" th:src="@{/images/book.png}">
+            <br>
+            <input class="login_item" type="text" placeholder="enter username" th:field="*{username}">
+            <br>
+            <input class="login_item" type="password" placeholder="enter password" th:field="*{password}">
+            <br>
+            <input class="login_item" type="submit" value="Login">
+            <button><a th:href="@{/registration_page}">Sign in</a></button>
+        </form>
+
+    </div>
+</body>
+</html>

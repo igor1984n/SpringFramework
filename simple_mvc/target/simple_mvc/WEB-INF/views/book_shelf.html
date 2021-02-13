@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My book shelf</title>
+    <style>
+        * {
+            font-family: cursive;
+        }
+
+        #root_container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #books {
+            width: 50%;
+            border-collapse: collapse;
+        }
+
+        table {
+            margin: 25px;
+        }
+
+        th {
+            text-align: left;
+        }
+
+        th, td {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            margin: 0 250px;
+            height: 110px;
+        }
+        input[type="submit"]{
+            width:100px;
+        }
+
+        a{
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+
+<body>
+<div header>
+    <a th:href="@{/login}">Log out</a>
+</div>
+<div id="root_container">
+    <div><img class="login_item logo" th:src="@{/images/book.png}"></div>
+
+    <form th:object="${book}">
+        <table>
+            <tr>
+                <td>
+                    <input type="text" placeholder="author" th:field="*{author}">
+                </td>
+                <td>
+                    <input type="text" placeholder="book title" th:field="*{title}">
+                </td>
+                <td>
+                    <input type="text" placeholder="size(pages)" th:field="*{size}">
+                </td>
+                <td>
+                    <input type="submit" value="save" th:formaction="@{/books/save}" th:formmethod="post" >
+                </td>
+                <td>
+                    <input type="submit" value="show all" th:formmethod="get" th:formaction="@{/books/shelf}">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <form method="post" th:action="@{/books/remove}">
+        <table>
+            <tr>
+                <td>
+                    <input type="text" placeholder="id number" th:name="bookIdToRemove">
+                </td>
+                <td>
+                    <input type="submit" value="remove">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <div class="title">
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" placeholder="title" th:name="bookTitle">
+                    </td>
+                    <td>
+                        <input type="submit" value="remove" th:formaction="@{/books/removeByTitle}"
+                               th:formmethod="post">
+                    </td>
+                    <td>
+                        <input type="submit" value="find" th:formaction="@{/books/findByTitle}" th:formmethod="get">
+                    </td>
+
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="author">
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" placeholder="author" th:name="bookAuthor">
+                    </td>
+                    <td>
+                        <input type="submit" value="remove" th:formaction="@{/books/removeByAuthor}"
+                               th:formmethod="post">
+                    </td>
+                    <td>
+                        <input type="submit" value="find" th:formaction="@{/books/findByAuthor}" th:formmethod="get">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="size">
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" required placeholder="size (default 0)" th:name="bookSize">
+                    </td>
+                    <td>
+                        <input type="submit" value="remove" th:formaction="@{/books/removeBySize}" th:formmethod="post">
+                    </td>
+                    <td>
+                        <input type="submit" value="find" th:formaction="@{/books/findBySize}" th:formmethod="get">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+
+    <table id="books">
+        <tr>
+            <th>id</th>
+            <th>author</th>
+            <th>title</th>
+            <th>size</th>
+        </tr>
+        <tr th:each="book : ${bookList}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.size}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

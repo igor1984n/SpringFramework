@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping(value = "/books")
@@ -23,9 +25,10 @@ public class BookShelfController {
 
     @GetMapping("/shelf")
     public String books(Model model) {
-        logger.info("got book shelf");
+        List<Book> bookList = bookService.getAllBooks();
         model.addAttribute("book", new Book());
-        model.addAttribute("bookList", bookService.getAllBooks());
+        model.addAttribute("bookList", bookList);
+        logger.info("got book shelf with the size " + bookList.size());
         return "book_shelf";
     }
 
@@ -47,7 +50,7 @@ public class BookShelfController {
     @PostMapping("/removeByTitle")
     public String removeBookByTitle(@RequestParam(value = "bookTitle") String bookTitle){
         if(!bookService.removeBookByTitle(bookTitle)){
-            logger.info("cannot find a book with this title: " + bookTitle);
+            logger.info("cannot find and remove a book with the title matching this query: " + bookTitle);
         }
         return "redirect:/books/shelf";
     }
@@ -55,7 +58,7 @@ public class BookShelfController {
     @PostMapping("/removeByAuthor")
     public String removeBookByAuthor(@RequestParam(value = "bookAuthor") String bookAuthor){
         if(!bookService.removeBookByAuthor(bookAuthor)){
-            logger.info("cannot find a book with this author: " + bookAuthor);
+            logger.info("cannot find and remove a book by the author matching this query: " + bookAuthor);
         }
         return "redirect:/books/shelf";
     }
@@ -70,43 +73,43 @@ public class BookShelfController {
 
     @GetMapping("/findByTitle")
     public  String getByTitle(@RequestParam(value="bookTitle") String bookTitle, Model model){
-        int listSize = bookService.getBookByTitle(bookTitle).size();
-        if(listSize == 0){
-            logger.info("cannot get a book with this title: " + bookTitle);
+
+        List<Book> bookList = bookService.getBookByTitle(bookTitle);
+        if(bookList.size() == 0){
+            logger.info("cannot get a book with the title matching this query: " + bookTitle);
             return "redirect:/books/shelf";
         }
-        logger.info("got " + listSize + " books filtered by title");
+        logger.info("got " + bookList.size() + " books filtered by title");
         model.addAttribute("book", new Book());
-        model.addAttribute("bookList", bookService.getBookByTitle(bookTitle));
+        model.addAttribute("bookList", bookList);
         return "book_shelf";
     }
 
     @GetMapping("/findByAuthor")
     public String getByAuthor(@RequestParam(value="bookAuthor") String bookAuthor, Model model){
-        int listSize = bookService.getBookByAuthor(bookAuthor).size();
-        if(listSize == 0){
-            logger.info("cannot find a book by this author: " + bookAuthor);
+        List<Book> bookList = bookService.getBookByAuthor(bookAuthor);
+        if(bookList.size() == 0){
+            logger.info("cannot find a book by the author matching this query: " + bookAuthor);
             return "redirect:/books/shelf";
         }
 
-        logger.info("got " + listSize + " books by " + bookAuthor);
+        logger.info("got " + bookList.size() + " books by " + bookAuthor);
         model.addAttribute("book", new Book());
-        model.addAttribute("bookList", bookService.getBookByAuthor(bookAuthor));
+        model.addAttribute("bookList", bookList);
         return "book_shelf";
     }
 
     @GetMapping("/findBySize")
     public String getBySize( Model model, @RequestParam(value = "bookSize") Integer bookSize){
-
-        int listSize = bookService.getBookBySize(bookSize).size();
-        if(listSize == 0){
+        List<Book> bookList = bookService.getBookBySize(bookSize);
+        if(bookList.size() == 0){
             logger.info("cannot find books with the specified size: " + bookSize);
             return "redirect:/books/shelf";
         }
 
-        logger.info("got " + listSize + " books with the size of " + bookSize);
+        logger.info("got " + bookList.size() + " books with the size of " + bookSize);
         model.addAttribute("book", new Book());
-        model.addAttribute("bookList", bookService.getBookBySize(bookSize));
+        model.addAttribute("bookList", bookList);
         return "book_shelf";
     }
 }

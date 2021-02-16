@@ -27,7 +27,7 @@
 <body>
 
 <div id="sign_in_form">
-    <form method="post" th:action="@{/sign_in}" th:object="${loginForm}">
+    <form method="post" th:action="@{/sign_up}" th:object="${loginForm}">
         <img class="login_item logo" th:src="@{/images/book.png}">
         <br>
 
@@ -35,7 +35,7 @@
         <br>
         <input class="sign_in_item" type="password" required placeholder="enter password" th:field="*{password}">
         <br>
-        <input class="sign_in_item" type="submit" value="Sign in">
+        <input class="sign_in_item" type="submit" value="Sign up">
     </form>
 
 </div>

@@ -29,8 +29,8 @@ public class RegistrationController {
         return "registration_page";
     }
 
-    @PostMapping(value = "/sign_in")
-    public String signIn(LoginForm loginForm){
+    @PostMapping(value = "/sign_up")
+    public String signUp(LoginForm loginForm){
         userService.addUser(new User(loginForm.getUsername(), loginForm.getPassword()));
         logger.info("redirecting to the login page");
         return "redirect:/login";

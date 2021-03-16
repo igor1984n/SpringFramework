@@ -26,6 +26,14 @@ public class BookService {
         return bookRepo.retrieveAll();
     }
 
+    public void defaultInit() {
+        logger.info("default INIT book service bean");
+    }
+
+    public void defaultDestroy() {
+        logger.info("default DESTROY in book service bean");
+    }
+
     public void saveBook(Book book) {
         if (book.getTitle().equals("") && book.getAuthor().equals("") && book.getSize() == null) {
             logger.info("unable to save an empty entry");
@@ -37,6 +45,7 @@ public class BookService {
     public boolean removeBookById(Integer bookIdToRemove) {
         boolean bookExists = getAllBooks().stream()
                 .anyMatch(book -> book.getId().equals(bookIdToRemove));
+        logger.info("book with id exists: " + bookExists);
         if (bookExists) {
             bookRepo.retrieveAll().stream()
                     .filter(book -> book.getId().equals(bookIdToRemove))

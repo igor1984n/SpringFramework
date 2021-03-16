@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>My book shelf</title>
@@ -48,7 +48,7 @@
 </head>
 
 <body>
-<div header>
+<div class="header">
     <a th:href="@{/login}">Log out</a>
 </div>
 <div id="root_container">
@@ -59,12 +59,15 @@
             <tr>
                 <td>
                     <input type="text" placeholder="author" th:field="*{author}">
+                    <p th:if="${#fields.hasErrors()}">field value must be a string</p>
                 </td>
                 <td>
                     <input type="text" placeholder="book title" th:field="*{title}">
+                    <p th:if="${#fields.hasErrors()}">field value must be a string</p>
                 </td>
                 <td>
                     <input type="text" placeholder="size(pages)" th:field="*{size}">
+                    <p th:if="${#fields.hasErrors()}">field value must be a number and consist of not more than 4 digits</p>
                 </td>
                 <td>
                     <input type="submit" value="save" th:formaction="@{/books/save}" th:formmethod="post" >
@@ -76,32 +79,38 @@
         </table>
     </form>
 
-    <form method="post" th:action="@{/books/remove}">
+    <form method="post" th:action="@{/books/remove}" th:object="${bookIdToRemove}">
         <table>
             <tr>
                 <td>
-                    <input type="text" placeholder="id number" th:name="bookIdToRemove">
+                    <input type="text" placeholder="id number" th:field="*{id}">
                 </td>
                 <td>
                     <input type="submit" value="remove">
+                </td>
+                <td th:if="${#fields.hasErrors()}">
+                    <p>Wrong id or not found</p>
                 </td>
             </tr>
         </table>
     </form>
 
     <div class="title">
-        <form>
+        <form th:object="${bookTitle}">
             <table>
                 <tr>
                     <td>
-                        <input type="text" placeholder="title" th:name="bookTitle">
+                        <input type="text" placeholder="title" th:field="*{title}">
                     </td>
                     <td>
-                        <input type="submit" value="remove" th:formaction="@{/books/removeByTitle}"
+                        <input type="submit" value="remove"  th:formaction="@{/books/removeByTitle}"
                                th:formmethod="post">
                     </td>
                     <td>
                         <input type="submit" value="find" th:formaction="@{/books/findByTitle}" th:formmethod="get">
+                    </td>
+                    <td th:if="${#fields.hasErrors()}">
+                        <p>Wrong title or not found</p>
                     </td>
 
                 </tr>
@@ -109,12 +118,12 @@
         </form>
     </div>
 
-    <div class="author">
-        <form>
+    <div class="author" >
+        <form th:object="${bookAuthor}">
             <table>
                 <tr>
                     <td>
-                        <input type="text" placeholder="author" th:name="bookAuthor">
+                        <input type="text" placeholder="author" th:field="*{author}">
                     </td>
                     <td>
                         <input type="submit" value="remove" th:formaction="@{/books/removeByAuthor}"
@@ -123,17 +132,20 @@
                     <td>
                         <input type="submit" value="find" th:formaction="@{/books/findByAuthor}" th:formmethod="get">
                     </td>
+                    <td th:if="${#fields.hasErrors()}">
+                        <p>Wrong author or not found</p>
+                    </td>
                 </tr>
             </table>
         </form>
     </div>
 
-    <div class="size">
-        <form>
+    <div class="size" >
+        <form th:object="${bookSize}">
             <table>
                 <tr>
                     <td>
-                        <input type="text" required placeholder="size (default 0)" th:name="bookSize">
+                        <input type="text"  placeholder="size (default 0)" th:field="*{size}">
                     </td>
                     <td>
                         <input type="submit" value="remove" th:formaction="@{/books/removeBySize}" th:formmethod="post">
@@ -141,11 +153,27 @@
                     <td>
                         <input type="submit" value="find" th:formaction="@{/books/findBySize}" th:formmethod="get">
                     </td>
+                    <td th:if="${#fields.hasErrors()}">
+                        <p>Must be a number consisting of not more than 4 digits</p>
+                    </td>
 
                 </tr>
             </table>
         </form>
     </div>
+
+    <form method="post" th:action="@{/books/uploadFile}" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td>
+                    <input type="file" name="file"/>
+                </td>
+                <td>
+                    <input type="submit" value="upload"/>
+                </td>
+            </tr>
+        </table>
+    </form>
 
 
     <table id="books">

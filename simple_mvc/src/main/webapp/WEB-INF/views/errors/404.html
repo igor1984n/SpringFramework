@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom 404</title>
+    <style>
+        *{
+            font-family: cursive;
+        }
+    </style>
+</head>
+<body>
+<h1>Oooops! Something went wrong! This page doesn't seem to exist (404)</h1>
+<p th:text="${errorMessage}"></p>
+<a href="/simple_mvc_war_exploded/login"> back to  login page</a>
+
+</body>
+</html>

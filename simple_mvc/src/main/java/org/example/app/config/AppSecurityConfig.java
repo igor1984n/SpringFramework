@@ -35,9 +35,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         logger.info("config http security");
-        http.headers().frameOptions().disable();
+//        http.headers().frameOptions().disable();
         http
-                .csrf().disable()  //not recommended
+                .csrf().disable()//not recommended
                 .authorizeRequests()
                 .antMatchers("/login*").permitAll()
                 .anyRequest().authenticated()

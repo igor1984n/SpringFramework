@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cannot Access File</title>
+    <style>
+        * {
+            font-family: cursive;
+        }
+    </style>
+</head>
+<body>
+<h1>Oooops! Something went wrong! You might not have enough permissions to work with this file</h1>
+<p th:text="${errorMessage}"></p>
+<a href="/simple_mvc_war_exploded/files/list"> back to downloads page</a>
+
+</body>
+</html>

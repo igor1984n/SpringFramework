@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Operation success</title>
+    <style>
+        * {
+            font-family: cursive;
+        }
+
+        #root_container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h3{
+            text-align: center;
+        }
+
+        .logo {
+            margin: 0 250px;
+            height: 110px;
+        }
+
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <a th:href="@{/login}">Log out</a>
+</div>
+<div id="root_container">
+    <div><img class="login_item logo" th:src="@{/images/book.png}"></div>
+    <h3 th:text="${message}"></h3>
+    <a th:href="@{/files/list}">back</a>
+</div>
+</body>
+</html>

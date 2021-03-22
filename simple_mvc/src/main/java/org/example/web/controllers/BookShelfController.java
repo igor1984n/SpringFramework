@@ -1,6 +1,7 @@
 package org.example.web.controllers;
 
 import org.apache.log4j.Logger;
+import org.example.app.exceptions.CannotAccessFileException;
 import org.example.app.services.BookService;
 import org.example.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class BookShelfController {
         model.addAttribute("bookTitle", new BookTitle());
         model.addAttribute("bookAuthor", new BookAuthor());
         model.addAttribute("bookSize", new BookSize());
-        logger.info("got book shelf with the size " + bookList.size());
+        logger.info("got book shelf with size " + bookList.size());
         return "book_shelf";
     }
 
@@ -182,12 +183,17 @@ public class BookShelfController {
     }
 
     @PostMapping("/uploadFile")
-    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile file) throws CannotAccessFileException, IOException {
 
             String name = file.getOriginalFilename();
             byte[] bytes = new byte[0];
 
+        try {
             bytes = file.getBytes();
+        } catch (IOException e) {
+            throw new CannotAccessFileException("This file cannot be read! " +
+                    "Probably, you don't have enough permissions or it is being used by another application");
+        }
         if (bytes.length != 0) {
 
             String rootPath = System.getProperty("catalina.home");
@@ -198,9 +204,15 @@ public class BookShelfController {
 
             //create file
             File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
+            try {
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-            stream.write(bytes);
-            stream.close();
+                stream.write(bytes);
+                stream.close();
+            } catch (IOException e) {
+                throw new CannotAccessFileException("Cannot write to this file! " +
+                        "Probably, the file is protected or it is being used by another application");
+            }
+
 
             logger.info("new file saved at: " + serverFile.getAbsolutePath());
 

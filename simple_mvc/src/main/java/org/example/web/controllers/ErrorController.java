@@ -8,14 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ErrorController {
 
     @GetMapping("/404")
-    public String notFoundError(){
+    public String notFoundError() {
         return "errors/404";
     }
 
     @GetMapping("/500")
-    public String fileNotFound(){
+    public String internalServerError() {
         return "errors/500";
     }
 
+    @GetMapping("/cannot_access_file")
+    public String fileNotFound() {
+        return "errors/cannot_access_file";
+    }
 
 }

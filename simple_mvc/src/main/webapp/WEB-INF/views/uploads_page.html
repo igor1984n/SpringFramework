@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Downnloads_page</title>
+    <style>
+        * {
+            font-family: cursive;
+        }
+
+        #root_container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #files {
+            width: 50%;
+            border-collapse: collapse;
+        }
+
+        table {
+            margin: 25px;
+        }
+
+        td {
+            border-bottom: 1px solid #ddd;
+        }
+
+        input[type="submit"]{
+            width:100px;
+        }
+
+        .logo {
+            margin: 0 250px;
+            height: 110px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <a th:href="@{/login}">Log out</a>
+</div>
+<div id="root_container">
+    <div><img class="login_item logo" th:src="@{/images/book.png}"></div>
+    <h3>Files list</h3>
+    <h4 th:text="${message}"></h4>
+    <form th:object="${file}">
+        <table id="files">
+            <tr th:each="file : ${files}">
+                <td th:text="${file.name}"></td>
+                <td>
+                    <input type="submit" th:formmethod="GET" th:formaction="@{${file.name}}" value="download">
+                </td>
+                <td>
+                    <input type="submit" th:formaction="@{/files/delete/{fileName}(fileName=${file.name})}"
+                           th:formmethod="POST" value="remove">
+                </td>
+            </tr>
+        </table>
+
+    </form>
+    <p>
+        <a th:href="@{/books/shelf}">back</a>
+    </p>
+
+</div>
+</body>
+</html>

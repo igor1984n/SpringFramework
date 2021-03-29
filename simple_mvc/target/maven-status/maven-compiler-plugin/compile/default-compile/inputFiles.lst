@@ -1,5 +1,6 @@
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\app\services\LoginService.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\web\controllers\BookShelfController.java
+C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\app\exceptions\DownloadsPageException.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\web\dto\Book.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\web\dto\LoginForm.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\web\config\WebContextConfig.java
@@ -8,6 +9,7 @@ C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\app\config\AppSecurityConfig.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\app\config\SecurityInit.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\app\services\UserRepository.java
+C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\web\controllers\DownloadsController.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\app\services\IdProvider.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\web\dto\BookSize.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\web\dto\BookTitle.java
@@ -23,3 +25,4 @@ C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\app\config\DbConfig.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\web\dto\User.java
 C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\app\services\BookRepository.java
+C:\Users\Igor\IdeaProjects\SpringFramework\simple_mvc\src\main\java\org\example\app\exceptions\IOException.java

@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.data.DTO;
 
-public class Book {
+public class Book implements Comparable<Book>{
 
     private Integer id;
     private String author;
@@ -57,5 +57,10 @@ public class Book {
                 ", priceOld='" + priceOld + '\'' +
                 ", price='" + price + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Book b) {
+        return getId().compareTo(b.getId());
     }
 }

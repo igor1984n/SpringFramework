@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorService {
@@ -20,13 +20,19 @@ public class AuthorService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Set<Author> getAuthorsData(){
+
+    public Map<String, List<Author>> getAuthorsMap() {
+
         List<Author> authors = jdbcTemplate.query("SELECT * FROM authors", (ResultSet rs, int rowNum) -> {
             Author author = new Author();
             author.setId(rs.getInt("id"));
-            author.setName(rs.getString("name"));
+            author.setFirstName(rs.getString("first_name"));
+            author.setLastName(rs.getString("last_name"));
             return author;
         });
-        return new TreeSet<Author>(authors);
+
+        return authors.stream().collect(Collectors.groupingBy((Author a) -> {
+            return a.getLastName().substring(0, 1);
+        }));
     }
 }

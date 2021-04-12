@@ -1,6 +1,6 @@
 <!--END-->
 <!--END--><!DOCTYPE html><!--[if IE 7]>
-<html class="ie7" lang="ru" >
+<html class="ie7" lang="ru">
 <![endif]-->
 <!--[if IE 8]>
 <html class="ie8" lang="ru">
@@ -10,7 +10,7 @@
 <![endif]-->
 <!--[if gt IE 9]><!-->
 <html lang="en" th:fragment="headFragment(title)" xmlns:th="http:///www.thymeleaf.org">
-<head >
+<head>
     <title th:text="${title}">Авторы</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
@@ -33,9 +33,19 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("input:radio").change(function () {
-                if ($(this).val() == "English") {
+                let data = $(this).val();
+                if (data == "English") {
                     window.location.replace('?lang=en');
-                } else window.location.replace('?lang=ru');
+                } else {
+                    window.location.replace('?lang=ru');
+                }localStorage.setItem("lang", data);
+            })
+            $(function(){
+                if(localStorage.getItem("lang") == "English"){
+                    $("#En").prop("checked", true);
+                } else{
+                    $("#Ru").prop("checked", true);
+                }
             })
         })
     </script>

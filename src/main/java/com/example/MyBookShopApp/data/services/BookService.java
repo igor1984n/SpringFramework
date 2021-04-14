@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.data.services;
 
 import com.example.MyBookShopApp.data.DTO.Book;
-import com.example.MyBookShopApp.util.BookPriceComparator;
+//import com.example.MyBookShopApp.util.BookPriceComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -33,8 +33,8 @@ public class BookService {
             book.setId(rs.getInt("Id"));
             book.setAuthor(rs.getString("author"));
             book.setTitle(rs.getString("title"));
-            book.setPriceOld(rs.getString("priceOld"));
-            book.setPrice(rs.getString("price"));
+            book.setPriceOld(Float.parseFloat(rs.getString("priceOld").substring(1)));
+            book.setPrice(Float.parseFloat(rs.getString("price").substring(1)));
             return book;
         });
         return new ArrayList(books);
@@ -51,7 +51,8 @@ public class BookService {
     public List<Book> getPopularBooks(){
         return getBooksData()
                 .stream()
-                .sorted(new BookPriceComparator())
+//                .sorted(new BookPriceComparator())
+                .sorted(Comparator.comparing(Book::getPrice))
                 .collect(Collectors.toList());
     }
 

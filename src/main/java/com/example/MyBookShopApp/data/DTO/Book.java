@@ -5,8 +5,8 @@ public class Book implements Comparable<Book>{
     private Integer id;
     private String author;
     private String title;
-    private String priceOld;
-    private String price;
+    private Float priceOld;
+    private Float price;
 
     public Integer getId() {
         return id;
@@ -32,19 +32,19 @@ public class Book implements Comparable<Book>{
         this.title = title;
     }
 
-    public String getPriceOld() {
+    public Float getPriceOld() {
         return priceOld;
     }
 
-    public void setPriceOld(String priceOld) {
+    public void setPriceOld(Float priceOld) {
         this.priceOld = priceOld;
     }
 
-    public String getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

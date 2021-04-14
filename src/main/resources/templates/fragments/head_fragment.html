@@ -38,12 +38,14 @@
                     window.location.replace('?lang=en');
                 } else {
                     window.location.replace('?lang=ru');
-                }localStorage.setItem("lang", data);
+                }
+                localStorage.setItem("lang", data);
             })
-            $(function(){
-                if(localStorage.getItem("lang") == "English"){
+            $(function () {
+                if (localStorage.getItem("lang") == "English" ||
+                    localStorage.getItem("lang") == null) {
                     $("#En").prop("checked", true);
-                } else{
+                } else {
                     $("#Ru").prop("checked", true);
                 }
             })

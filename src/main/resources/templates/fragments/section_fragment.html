@@ -13,9 +13,9 @@
                     <div class="Card-content">
                         <strong class="Card-title"><a href="/books/slug.html" th:href="@{/books/slug}" th:text="${#strings.toUpperCase(book.title)}">Техника</a>
                         </strong>
-                        <div class="Card-description" th:text="${book.author}">Кондратенко Валерий Петрович
+                        <div class="Card-description" th:each="author : ${book.authors}"   th:text="${author}">Кондратенко Валерий Петрович
                         </div>
-                        <div class="Card-cost"><span class="Card-priceOld" th:with="oldPrice=${book.priceOld} * #{exchange.rate}" th:text="#{price.currency} +' ' + ${#numbers.formatDecimal(oldPrice,2,2)}">₽300.00</span><span class="Card-price" th:with="price=${book.price} * #{exchange.rate}" th:text="#{price.currency} +' ' + ${#numbers.formatDecimal(price,2,2)}">₽190.00</span>
+                        <div class="Card-cost"><span class="Card-priceOld" th:with="oldPrice=${book.priceOld} / #{exchange.rate}" th:text="#{price.currency} +' ' + ${#numbers.formatDecimal(oldPrice,1,2)}">₽300.00</span><span class="Card-price" th:with="price=${book.price} / #{exchange.rate}" th:text="#{price.currency} +' ' + ${#numbers.formatDecimal(price,1,2)}">₽190.00</span>
                         </div>
                     </div>
                 </div>

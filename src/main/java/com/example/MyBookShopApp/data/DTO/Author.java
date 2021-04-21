@@ -1,10 +1,30 @@
 package com.example.MyBookShopApp.data.DTO;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "authors")
 public class Author{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String firstName;
-    private String lastName;
+
+    private String photo;
+    @Column(nullable = false)
+    private String slug;
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String description;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book2author",
+    joinColumns = {@JoinColumn(name = "author_id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")
+    })
+    private List<Book>books;
 
     public Integer getId() {
         return id;
@@ -14,28 +34,56 @@ public class Author{
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSlug() {
+        return slug;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+//    public List<Book2Author> getBook2Authors() {
+//        return book2Authors;
+//    }
+//
+//    public void setBook2Authors(List<Book2Author> book2Authors) {
+//        this.book2Authors = book2Authors;
+//    }
 
     @Override
     public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return  name;
     }
 }

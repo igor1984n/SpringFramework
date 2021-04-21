@@ -1,12 +1,11 @@
 package com.example.MyBookShopApp.data.services;
 
+import com.example.MyBookShopApp.data.DAO.BookRepository;
 import com.example.MyBookShopApp.data.DTO.Book;
-//import com.example.MyBookShopApp.util.BookPriceComparator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,24 +19,15 @@ public class BookService {
 
     private Logger logger = Logger.getLogger(BookService.class.getName());
 
-    private final JdbcTemplate jdbcTemplate;
+    private BookRepository bookRepository;
 
     @Autowired
-    public BookService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
 
     public List<Book> getBooksData() {
-        List<Book> books = jdbcTemplate.query("SELECT * FROM books", (ResultSet rs, int rowNum) -> {
-            Book book = new Book();
-            book.setId(rs.getInt("Id"));
-            book.setAuthor(rs.getString("author"));
-            book.setTitle(rs.getString("title"));
-            book.setPriceOld(Float.parseFloat(rs.getString("priceOld").substring(1)));
-            book.setPrice(Float.parseFloat(rs.getString("price").substring(1)));
-            return book;
-        });
-        return new ArrayList(books);
+        return bookRepository.findAll();
     }
 
     public List<Book> getRecentBooks() {
@@ -51,7 +41,6 @@ public class BookService {
     public List<Book> getPopularBooks(){
         return getBooksData()
                 .stream()
-//                .sorted(new BookPriceComparator())
                 .sorted(Comparator.comparing(Book::getPrice))
                 .collect(Collectors.toList());
     }
@@ -65,12 +54,14 @@ public class BookService {
                 .peek(book -> logger.info("title " + book.getTitle() + " matches " + regExp))
                 .collect(Collectors.toList());
         List <Book> authorMatches = getBooksData().stream()
-                .filter(book -> book.getAuthor().matches(pattern.pattern()))
-                .peek(book -> logger.info("author " + book.getAuthor() + " matches " + regExp))
+                .filter(book -> book.getAuthors().toString().matches(pattern.pattern()))
+                .peek(book -> logger.info("author " + book.getAuthors().toString() + " matches " + regExp))
                 .collect(Collectors.toList());
         searchResults.addAll(titleMatches);
         searchResults.addAll(authorMatches);
 
         return searchResults;
     }
+
+
 }

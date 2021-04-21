@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.DTO.Book;
+import com.example.MyBookShopApp.data.services.AuthorService;
 import com.example.MyBookShopApp.data.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ public class MainPageController {
     public List<Book> getPopularBooks(){
         return bookService.getPopularBooks();
     }
+
 
     @GetMapping("/")
     public String getMainPage() {
